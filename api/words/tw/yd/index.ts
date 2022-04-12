@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Twit from 'twit';
 import { words } from '../../../../data/words';
-import { words as wordsConfig } from '../../../../.config';
+import { words as wordsConfig, headers } from '../../../../.config';
 import { twyd } from '../../../../src/services/tw';
 import * as constants from '../../../../src/constants/words';
 
@@ -12,8 +12,9 @@ const T = new Twit({
   access_token_secret: wordsConfig.access_token_secret,
 });
 
-module.exports = async (_req: VercelRequest, res: VercelResponse) => {
+module.exports = async (req: VercelRequest, res: VercelResponse) => {
   try {
+    if(req.headers.wordstk !== headers.wordstk) throw Error('Request error');
     const response = await twyd(words, T, constants);
     res.status(200).send(response);
   } catch(error) {
