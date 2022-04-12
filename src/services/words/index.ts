@@ -1,7 +1,13 @@
-import { FIRST_DAY, DAY_MS } from '../constants';
-import { Word } from '../interfaces';
+import { FIRST_DAY, DAY_MS } from '../../constants';
+import { Word } from '../../interfaces';
 
 export const getToday = () => new Date(new Date().setHours(0, 0, 0, 0));
+
+export const getYesterday = () => {
+  const today = getToday();
+  today.setDate(today.getDate() - 1);
+  return today;
+};
 
 export const getDateParsed = (date: Date) => date.toISOString().slice(0,10);
 
@@ -23,4 +29,14 @@ export const getTodayWord = (words: Word[]) => {
 
 export const getRandomWord = (words: Word[]) => {
   return words[Math.floor(Math.random() * words.length)];
+};
+
+export const getYesterdayWord = (words: Word[]) => {
+  const yesterday = getYesterday();
+  const date = getDateParsed(yesterday);
+  const daysFromFirstDay = getDaysFromFirstDay(yesterday);
+  return {
+    word: words[daysFromFirstDay % words.length],
+    date,
+  };
 };
