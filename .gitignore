@@ -6,7 +6,7 @@ data
 .config
 api/*
 !api/date
-!api/word
+!api/words
 src/constants/*
 !src/constants/index.ts
 !src/constants/words
