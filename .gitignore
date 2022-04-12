@@ -7,3 +7,8 @@ data
 api/*
 !api/date
 !api/word
+src/constants/*
+!src/constants/index.ts
+!src/constants/words
+src/images/*
+!src/images/words
