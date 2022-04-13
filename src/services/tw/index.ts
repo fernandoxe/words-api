@@ -19,7 +19,7 @@ const getFitLines = (text: string, ctx: CanvasRenderingContext2D, maxTextWidth: 
     const words = line.split(' ');
     let fitLine = words[0];
     for (let j = 1; j < words.length; j++) {
-      const word = words[j];console.log('maxTextWidth', maxTextWidth)
+      const word = words[j];
       if(ctx.measureText(fitLine + ' ' + word).width <= maxTextWidth) {
         fitLine += ' ' + word;
       } else {
@@ -37,7 +37,7 @@ const getFitLines = (text: string, ctx: CanvasRenderingContext2D, maxTextWidth: 
 
 const getMargin = (previusSize: number, nextSize: number, margin: number) => {
   const newMargin = previusSize / 2 + margin + nextSize / 2;
-  console.log('margin', newMargin);
+  
   return newMargin;
 };
 
@@ -141,9 +141,8 @@ const getImageDataURL = async (word: Word, date: string, constants: any) => {
   ctx.font = `italic ${FONT_SIZE_LINE}px ${FONT_NAME}`;
   ctx.fillStyle = FONT_COLOR;
 
-  console.log('lines', lines);
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];console.log('line', line);
+    const line = lines[i];
     drawLine(line, word.word, positionY, FONT_COLOR, FONT_COLOR_WORD, ctx);
     positionY += (i === lines.length - 1 ? getMargin(FONT_SIZE_LINE, FONT_SIZE, MARGIN / 2) : FONT_SIZE_LINE);
   }
@@ -171,8 +170,9 @@ const getImageDataURL = async (word: Word, date: string, constants: any) => {
 export const tw = async (twit: Twit, constants: any) => {
 
   const twResult = await twit.post('statuses/update', { status: constants.APP_TODAY_TEXT });
-
   const response = `Post ok: ${(twResult.data as any).text}`;
+  
+  // const response = 'Post ok: no tweet';
   return response;
 };
 
@@ -196,6 +196,7 @@ export const twyd = async (words: Word[], twit: Twit, constants: any) => {
   const word = getYesterdayWord(words);
 
   const imageDataURL = await getImageDataURL(word.word, word.date, constants);
+
   const b64image = getB64Image(imageDataURL, constants.IMAGE_MIME_TYPE);
   
   const imageResult = await twit.post('media/upload', { media_data: b64image });
@@ -208,8 +209,8 @@ export const twyd = async (words: Word[], twit: Twit, constants: any) => {
   await twit.post('media/metadata/create', meta);
   const twResult = await twit.post('statuses/update', { status: constants.APP_YESTERDAY_MESSAGE, media_ids: [mediaId] });
 
-  const response = `Post ok: ${(twResult.data as any).text}`;  
-  // const response = `<html><head></head><body style="margin: 0"><img src="${imageDataURL}" /></body></html>`;
+  const response = `Post ok: ${(twResult.data as any).text}`;
 
+  // const response = `<html><head></head><body style="margin: 0"><img src="${imageDataURL}" /></body></html>`;
   return response;
 };
