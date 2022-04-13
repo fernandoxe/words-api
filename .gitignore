@@ -1,12 +1,11 @@
 node_modules
 .env
-.vercel
-vercel.json
 data
 .config
-api/*
-!api/date
-!api/words
+build
+src/api/*
+!src/api/date
+!src/api/words
 src/constants/*
 !src/constants/index.ts
 !src/constants/words
