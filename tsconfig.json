@@ -7,10 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "build"
   },
   "include": [
-    "pages",
     "src",
     "data",
   ]
